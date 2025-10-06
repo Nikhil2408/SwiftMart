@@ -67,7 +67,7 @@ export const signup = async (req, res) => {
 
     return res.status(201).json({
       user: {
-        _id: user._id,
+        id: user._id,
         name: user.name,
         email: user.email,
         role: user.role,
@@ -166,6 +166,15 @@ export const refreshAccessToken = async (req, res) => {
     return res.json({ message: "Access Token generated successfully" });
   } catch (error) {
     console.log(`Error in refreshToken controller : ${error.message}`);
+    return res.status(500).json({ message: error.message });
+  }
+};
+
+export const getProfile = async (req, res) => {
+  try {
+    return res.status(200).json(req.user);
+  } catch (error) {
+    console.log(`Error in getProfile controller : ${error.message}`);
     return res.status(500).json({ message: error.message });
   }
 };
