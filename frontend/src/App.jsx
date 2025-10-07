@@ -5,7 +5,6 @@ import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import Navbar from "./components/Navbar";
 import useUserStore from "./stores/useUserStore";
-import LoadingSpinner from "./components/LoadingSpinner";
 import { LoaderCircle } from "lucide-react";
 import AdminDashboard from "./pages/AdminDashboard";
 
@@ -74,13 +73,28 @@ function App() {
   }, [checkAuth]);
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white relative overflow-hidden">
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute inset-0">
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-[radial-gradient(ellipse_at_top,rgba(16,185,129,0.3)_0%,rgba(74, 179, 149, 0.2)_45%,rgba(0,0,0,0.1)_100%)]" />
-        </div>
+    <div className="relative min-h-screen text-white overflow-hidden">
+      {/* --- BACKGROUND LAYER --- */}
+      <div className="absolute inset-0 bg-gray-900" />
+
+      {/* --- ELLIPTICAL GRADIENTS --- */}
+      <div className="absolute inset-0 pointer-events-none">
+        {/* Top-center glow */}
+        <div
+          className="absolute top-[-10%] left-1/2 -translate-x-1/2 w-[100%] h-[80%] 
+          bg-[radial-gradient(ellipse_at_center,rgba(16,185,129,0.45)_0%,transparent_70%)]
+          blur-3xl opacity-80"
+        />
+        {/* Bottom-left glow */}
+        <div
+          className="absolute bottom-[-20%] left-[10%] w-[70%] h-[70%]
+          bg-[radial-gradient(ellipse_at_center,rgba(52,211,153,0.35)_0%,transparent_80%)]
+          blur-3xl opacity-60"
+        />
       </div>
-      <div className="relative z-50 pt-25">
+
+      {/* --- MAIN CONTENT --- */}
+      <div className="relative z-10 pt-20">
         <Navbar />
         {checkingAuth ? (
           <div className="flex items-center justify-center h-[calc(100vh-10rem)]">

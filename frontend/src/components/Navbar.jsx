@@ -7,7 +7,7 @@ const Navbar = () => {
   const { user, logout } = useUserStore();
   const isAdmin = user?.role === "admin";
   return (
-    <header className="fixed top-0 left-0 w-full bg-gray-900 border-b border-emerald-800 py-2">
+    <header className="fixed top-0 left-0 w-full bg-gray-900 border-b border-emerald-800 py-2 z-[9999]">
       <div className="flex justify-between items-center px-4">
         <Link
           to="/"

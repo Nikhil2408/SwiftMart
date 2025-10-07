@@ -13,7 +13,7 @@ const categories = [
 
 const Home = () => {
   return (
-    <div className="flex flex-col items-center h-[calc(100vh-10rem)]">
+    <div className="flex flex-col items-center">
       <h1 className="text-4xl text-emerald-400 font-bold">
         Explore Our Categories
       </h1>

@@ -53,7 +53,7 @@ const AdminDashboard = () => {
         </div>
         {configTabs.map((tab) => {
           if (tab.id === activeTab) {
-            return <tab.component />;
+            return <tab.component key={tab.id} />;
           }
         })}
       </div>

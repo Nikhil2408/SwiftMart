@@ -2,7 +2,7 @@ import axiosInstance from "../lib/axios";
 import { create } from "zustand";
 import { toast } from "react-hot-toast";
 
-const useUserStore = create((set, get) => {
+const useUserStore = create((set) => {
   return {
     user: null,
     loading: false,
@@ -59,6 +59,7 @@ const useUserStore = create((set, get) => {
         const loggedInProfile = await axiosInstance.get("/auth/profile");
         set({ user: loggedInProfile.data, checkingAuth: false });
       } catch (e) {
+        console.log(e);
         set({ checkingAuth: false, user: null });
       }
     },
