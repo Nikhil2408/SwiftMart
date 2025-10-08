@@ -8,16 +8,19 @@ import useUserStore from "./stores/useUserStore";
 import { LoaderCircle } from "lucide-react";
 import AdminDashboard from "./pages/AdminDashboard";
 
+// eslint-disable-next-line react-refresh/only-export-components
 const RequireAuth = ({ children }) => {
   const { user } = useUserStore();
   return user ? children : <Navigate to="/login" replace />;
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 const AuthOnly = ({ children }) => {
   const { user } = useUserStore();
   return user ? <Navigate to="/" replace /> : children;
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 const RequireAdmin = ({ children }) => {
   const { user } = useUserStore();
   const role = user?.role;
@@ -65,6 +68,7 @@ const appRouter = createBrowserRouter([
   },
 ]);
 
+// eslint-disable-next-line react-refresh/only-export-components
 function App() {
   const { checkAuth, checkingAuth } = useUserStore();
 

@@ -1,6 +1,9 @@
 import React, { useState } from "react";
+// eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
-import { Upload, PlusCircle } from "lucide-react";
+import { Upload, PlusCircle, Loader } from "lucide-react";
+import userProductStore from "../stores/useProductStore";
+import { Toaster } from "react-hot-toast";
 
 const categories = [
   { internalName: "", displayName: "Select a category" },
@@ -13,15 +16,21 @@ const categories = [
   { internalName: "bag", displayName: "Bag" },
 ];
 
+const createProductInitialData = {
+  name: "",
+  description: "",
+  price: "",
+  category: "",
+  image: "",
+};
+
 const CreateProduct = () => {
-  const [createProductData, setCreateProductData] = useState({
-    name: "",
-    description: "",
-    price: "",
-    category: "",
-    image: "",
-  });
+  const [createProductData, setCreateProductData] = useState(
+    createProductInitialData
+  );
   const [errors, setErrors] = useState({});
+
+  const { createProduct, loading } = userProductStore();
 
   function changeHandler(e) {
     setCreateProductData((currentState) => {
@@ -51,11 +60,18 @@ const CreateProduct = () => {
       }
     });
     setErrors(errorObj);
+    return Object.keys(errorObj).length === 0;
   }
-  function handleCreateProduct() {
-    checkValidations();
-    if (Object.keys(errors).length === 0) {
-      console.log(createProductData);
+
+  async function handleCreateProduct() {
+    const isValid = checkValidations();
+    if (isValid) {
+      try {
+        await createProduct(createProductData);
+        setCreateProductData(createProductInitialData);
+      } catch (error) {
+        console.log("Error while creating product", error);
+      }
     }
   }
 
@@ -130,6 +146,7 @@ const CreateProduct = () => {
             name="category"
             id="category"
             className="bg-gray-600 py-2 px-2 rounded-lg mt-2 mb-1 outline-none w-full"
+            value={createProductData.category}
             onChange={changeHandler}
           >
             {categories.map((category) => {
@@ -174,10 +191,20 @@ const CreateProduct = () => {
           className="flex gap-2 items-center justify-center bg-emerald-500 p-2 rounded-lg mt-6 mb-1 w-full"
           onClick={handleCreateProduct}
         >
-          <PlusCircle size={18} />
-          <span>Create Product</span>
+          {loading ? (
+            <>
+              <Loader className="animate-spin" size={18} />
+              <span>Loading...</span>
+            </>
+          ) : (
+            <>
+              <PlusCircle size={18} />
+              <span>Create Product</span>
+            </>
+          )}
         </button>
       </motion.div>
+      <Toaster />
     </>
   );
 };

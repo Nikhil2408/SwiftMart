@@ -9,6 +9,7 @@ import {
   Eye,
   Loader,
 } from "lucide-react";
+// eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
 import useUserStore from "../stores/useUserStore";
 import { Toaster } from "react-hot-toast";
@@ -42,12 +43,12 @@ const Signup = () => {
       }
     });
     setErrors(errorObj);
+    return Object.keys(errors).length === 0;
   }
 
-  function handleSignUp(e) {
-    e.preventDefault();
-    checkValidations();
-    if (Object.keys(errors).length === 0) {
+  function handleSignUp() {
+    const isValid = checkValidations();
+    if (isValid) {
       signup(formData);
     }
   }
