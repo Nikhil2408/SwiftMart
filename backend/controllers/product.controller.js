@@ -2,22 +2,11 @@ import { redis } from "../lib/redis.js";
 import Product from "../model/product.model.js";
 import cloudinary from "../lib/cloudinary.js";
 
-const updateFeaturedProductsInRedis = async (updatedProduct) => {
+const updateFeaturedProductsInRedis = async () => {
+  //   console.log(updatedProduct);
   try {
-    const featuredProducts = await redis.get("featured_products");
-    const updatedFeaturedProducts = JSON.parse(featuredProducts).map(
-      (product) => {
-        if (product._id === updatedProduct._id) {
-          product.isFeatured = updatedProduct.isFeatured;
-          return product;
-        }
-        return product;
-      }
-    );
-    await redis.set(
-      "featured_products",
-      JSON.stringify(updatedFeaturedProducts)
-    );
+    const featuredProducts = await Product.find({ isFeatured: true }).lean();
+    await redis.set("featured_products", JSON.stringify(featuredProducts));
   } catch (error) {
     console.log(
       `Error while updating featured products in redis: ${error.message}`
@@ -113,6 +102,7 @@ export const deleteProduct = async (req, res) => {
       }
     }
     await Product.findByIdAndDelete(productId);
+    await updateFeaturedProductsInRedis();
     return res.status(200).json({ message: "Product deleted successfully" });
   } catch (error) {
     console.log(`Error in deleteProductcontroller ${error.message}`);
@@ -155,12 +145,12 @@ export const getProductsByCategory = async (req, res) => {
 export const toggleFeaturedFlag = async (req, res) => {
   try {
     const productId = req.params.productId;
-    const product = Product.findById(productId);
+    const product = await Product.findById(productId);
     if (product) {
       product.isFeatured = !product.isFeatured;
       const updatedProduct = await product.save();
-      await updateFeaturedProductsInRedis(updatedProduct);
-      res.status(200).json(updatedProduct);
+      await updateFeaturedProductsInRedis();
+      return res.status(200).json(updatedProduct);
     } else {
       return res.status(404).json({ message: "Product not found" });
     }

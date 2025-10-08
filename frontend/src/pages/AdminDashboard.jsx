@@ -29,7 +29,7 @@ const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState("create");
   return (
     <>
-      <div className="flex flex-col items-center border">
+      <div className="flex flex-col items-center">
         <h1 className="text-3xl font-bold text-emerald-500 mb-6">
           Admin Dashboard
         </h1>
