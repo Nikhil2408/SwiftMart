@@ -7,6 +7,7 @@ import Navbar from "./components/Navbar";
 import useUserStore from "./stores/useUserStore";
 import { LoaderCircle } from "lucide-react";
 import AdminDashboard from "./pages/AdminDashboard";
+import CategoryPage from "./pages/CategoryPage";
 
 // eslint-disable-next-line react-refresh/only-export-components
 const RequireAuth = ({ children }) => {
@@ -63,6 +64,10 @@ const appRouter = createBrowserRouter([
             <AdminDashboard />
           </RequireAdmin>
         ),
+      },
+      {
+        path: "/category/:category",
+        element: <CategoryPage />,
       },
     ],
   },

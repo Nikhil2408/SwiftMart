@@ -8,12 +8,12 @@ import { Toaster } from "react-hot-toast";
 const categories = [
   { internalName: "", displayName: "Select a category" },
   { internalName: "jeans", displayName: "Jeans" },
-  { internalName: "t-shirt", displayName: "T-Shirt" },
-  { internalName: "shoe", displayName: "Shoe" },
+  { internalName: "tshirts", displayName: "T-Shirt" },
+  { internalName: "shoes", displayName: "Shoe" },
   { internalName: "glasses", displayName: "Glasses" },
-  { internalName: "jacket", displayName: "Jacket" },
-  { internalName: "suit", displayName: "Suit" },
-  { internalName: "bag", displayName: "Bag" },
+  { internalName: "jackets", displayName: "Jacket" },
+  { internalName: "suits", displayName: "Suit" },
+  { internalName: "bags", displayName: "Bag" },
 ];
 
 const createProductInitialData = {
